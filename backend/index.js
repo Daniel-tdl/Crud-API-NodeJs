@@ -1,5 +1,8 @@
 const app = require('express')()
 const consign = require('consign')
+const knex = require('./config/db')
+
+app.db = knex
 
 consign()
     .then('./config/middlewares.js')
