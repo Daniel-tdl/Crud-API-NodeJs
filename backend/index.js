@@ -6,6 +6,7 @@ app.db = knex
 
 consign()
     .then('./config/middlewares.js')
+    .then('./api/validacao.js')
     .then('./api')
     .then('./config/routes.js')
     .into(app)
