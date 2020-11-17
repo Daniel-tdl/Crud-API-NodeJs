@@ -1,4 +1,4 @@
-const {body, validatorResult} = require('express-validator')
+var validator = require("email-validator")
 
 module.exports = app => {
     function existeOrErro(value, msg) {
@@ -20,5 +20,10 @@ module.exports = app => {
         return nil
     }
 
-    return {dataFabricacaoMaiorDataValidade, naoExisteOrErro, existeOrErro}
+    function validarEmail(email, msg) {
+        if (typeof email === 'string' && !email.trim()) throw msg
+        if (!validator.validate(email)) throw msg 
+    }
+
+    return { validarEmail, dataFabricacaoMaiorDataValidade, naoExisteOrErro, existeOrErro }
 }
