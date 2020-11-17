@@ -1,5 +1,7 @@
+const { authSecret } = require('../.env')
 const bcrypt = require('bcrypt-nodejs')
 const jwt = require('jwt-simple')
+
 
 module.exports = app => {
     const AuthSegredo = 'EscolherAMelhorFormaDeGuardarEsseSecret'
@@ -29,7 +31,7 @@ module.exports = app => {
 
         res.json({
             ...payload,
-            token: jwt.encode(payload, AuthSegredo)
+            token: jwt.encode(payload, authSecret)
         })
     }
 
@@ -37,7 +39,7 @@ module.exports = app => {
         const usuarioData = req.body || null
         try {
             if (usuarioData) {
-                const token = jwt.decode(userData.token, AuthSegredo)
+                const token = jwt.decode(userData.token, authSecret)
 
                 if (new Date(token.exp * 1000) > new Date()) {
                     return res.send(true)

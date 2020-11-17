@@ -5,6 +5,7 @@ const knex = require('./config/db')
 app.db = knex
 
 consign()
+    .include('./config/passaporte.js')
     .then('./config/middlewares.js')
     .then('./api/validacao.js')
     .then('./api')
