@@ -28,13 +28,21 @@ module.exports = app => {
         app.db('Produtos')
             .where({ id: req.params.id })
             .first()
-            .then( cat => res.json(cat))
+            .then( prod => res.json(prod))
             .catch(err => res.status(500).send(err))
     }
 
+    const limite = 10
     const buscar = async (req, res) => {
+        const pagina = req.query.page || 1
+        
+        const registros = await app.db('Produtos').count('id').first()
+        const count = parseInt(registros.count) 
+
         app.db('Produtos')
-            .then( cat => res.json(cat))
+            .select('*')
+            .limit(limite).offset(pagina * limite - limite)
+            .then( produtos => res.json( {data: produtos, count, limite}))
             .catch(err => res.status(500).send(err))
     }
 

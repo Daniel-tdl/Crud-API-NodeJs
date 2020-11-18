@@ -26,7 +26,7 @@ module.exports = app => {
         .all(app.config.passaporte.authenticate())
         .post(app.api.categoria.remover)
     
-        app.route('/produtos/store')
+    app.route('/produtos/store')
         .all(app.config.passaporte.authenticate())
         .post(app.api.produto.salvar)
 

@@ -32,9 +32,17 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
+    const limite = 10
     const buscar = async (req, res) => {
+        const pagina = req.query.page || 1
+        
+        const registros = await app.db('Categorias').count('id').first()
+        const count = parseInt(registros.count) 
+
         app.db('Categorias')
-            .then( cat => res.json(cat))
+            .select('*')
+            .limit(limite).offset(pagina * limite - limite)
+            .then( cat => res.json( {data: cat, count, limite}))
             .catch(err => res.status(500).send(err))
     }
 
