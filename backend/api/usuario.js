@@ -32,12 +32,12 @@ module.exports = app => {
         if (usuario.id) {
             app.db('Usuarios')
             .update(usuario).where({id: usuario.id})
-            .then(_ => res.status(204).send(usuario))
+            .then(_ => res.status(204).send())
             .catch(e => res.status(500).send(e))            
         } else {
             app.db('Usuarios')
             .insert(usuario)
-            .then(_ => res.status(204).send(usuario))
+            .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err)) 
         }
     }
