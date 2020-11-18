@@ -4,8 +4,6 @@ const jwt = require('jwt-simple')
 
 
 module.exports = app => {
-    const AuthSegredo = 'EscolherAMelhorFormaDeGuardarEsseSecret'
-
     const login = async (req, res) => {
         if (!req.body.email || !req.body.senha) {
             return res.status(400).send('Informe usuário e senha!')

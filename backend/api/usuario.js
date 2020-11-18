@@ -9,19 +9,14 @@ module.exports = app => {
     }
 
     const salvar = async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.send({validacao: errors.array()})
-        }
-
         const usuario = { ...req.body }
         if (req.params.id) usuario.id = req.params.id
 
         try {
             existeOrErro(usuario.nome, 'O nome do usuário é obrigatório')
+            existeOrErro(usuario.senha, 'A senha é obrigatório')
             validarEmail(usuario.email, 'Email inválido!')
             
-            console.log(usuario)
             const usuariodb = await app.db('Usuarios')
                 .where({ email: usuario.email }).first()
 
@@ -35,7 +30,6 @@ module.exports = app => {
         usuario.senha = encriptarSenha(usuario.senha)
         
         if (usuario.id) {
-            console.log('Aqui 1')
             app.db('Usuarios')
             .update(usuario).where({id: usuario.id})
             .then(_ => res.status(204).send(usuario))
