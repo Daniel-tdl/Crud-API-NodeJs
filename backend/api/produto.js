@@ -1,11 +1,12 @@
 module.exports = app => {
-    const { dataValidaOrErro, dataFabricacaoMaiorDataValidade, existeOrErro, EhNumberOrErro } = app.api.validacao
+    const { EhBolleanOrErro, dataValidaOrErro, dataFabricacaoMaiorDataValidade, existeOrErro, EhNumberOrErro } = app.api.validacao
 
     const salvar = (req, res) => {
         const produto = { ...req.body }
         if (req.params.id) produto.id = req.params.id
        
         try {
+            EhBolleanOrErro(produto.perishableProduct, 'O valor do "perishableProduct" não é valído.')
             existeOrErro(produto.nome, 'O nome da produto é obrigatório')
             dataValidaOrErro(produto.manufacturingDate, 'Data de fabricação invalida.')
             dataValidaOrErro(produto.manufacturingDate, 'Data de validade invalida.')
@@ -13,7 +14,6 @@ module.exports = app => {
                 'Data de fabricação maior que data de validade.')    
             EhNumberOrErro(produto.price, 'Informe um valor valido para o produto.')
             EhNumberOrErro(produto.categoryId, 'Informe o id da categoria do produto.')
-
             produto.price = produto.price.toFixed(2)
         } catch (error) {
             return res.status(400).send(error)

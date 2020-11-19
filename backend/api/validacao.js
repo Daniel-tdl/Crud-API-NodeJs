@@ -26,6 +26,11 @@ module.exports = app => {
         if (!value) throw msg
         if (typeof value !== 'number') throw msg 
     }
+
+    function EhBolleanOrErro(value, msg) {
+       const verdadeiro =  (value === true || value === false)
+        if (!verdadeiro) throw msg
+    }
     
     function dataFabricacaoMaiorDataValidade(dataFabricacao, dataValidade, msg) {
         const dataFab = new Date(dataFabricacao)
@@ -38,5 +43,5 @@ module.exports = app => {
         if (!validator.validate(email)) throw msg 
     }
 
-    return { validarEmail, dataFabricacaoMaiorDataValidade, naoExisteOrErro, existeOrErro, EhNumberOrErro, dataValidaOrErro }
+    return { EhBolleanOrErro ,validarEmail, dataFabricacaoMaiorDataValidade, naoExisteOrErro, existeOrErro, EhNumberOrErro, dataValidaOrErro }
 }
