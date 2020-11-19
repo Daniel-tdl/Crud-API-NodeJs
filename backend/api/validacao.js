@@ -15,9 +15,22 @@ module.exports = app => {
         }
         throw msg
     } 
+
+    function dataValidaOrErro(value, msg) {
+        const data = new Date(value)
+        if (isNaN(data) || (data.toString() === "Invalid Date"))    
+            throw msg
+    }
+
+    function EhNumberOrErro(value, msg) {
+        if (!value) throw msg
+        if (typeof value !== 'number') throw msg 
+    }
     
     function dataFabricacaoMaiorDataValidade(dataFabricacao, dataValidade, msg) {
-        return nil
+        const dataFab = new Date(dataFabricacao)
+        const dataVal = new Date(dataValidade)
+        if (dataFab > dataVal) throw msg
     }
 
     function validarEmail(email, msg) {
@@ -25,5 +38,5 @@ module.exports = app => {
         if (!validator.validate(email)) throw msg 
     }
 
-    return { validarEmail, dataFabricacaoMaiorDataValidade, naoExisteOrErro, existeOrErro }
+    return { validarEmail, dataFabricacaoMaiorDataValidade, naoExisteOrErro, existeOrErro, EhNumberOrErro, dataValidaOrErro }
 }

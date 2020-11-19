@@ -1,5 +1,5 @@
 module.exports = app => {
-    const { naoExisteOrErro, existeOrErro } = app.api.validacao
+    const { dataValidaOrErro, dataFabricacaoMaiorDataValidade, existeOrErro, EhNumberOrErro } = app.api.validacao
 
     const salvar = (req, res) => {
         const produto = { ...req.body }
@@ -7,6 +7,14 @@ module.exports = app => {
        
         try {
             existeOrErro(produto.nome, 'O nome da produto é obrigatório')
+            dataValidaOrErro(produto.manufacturingDate, 'Data de fabricação invalida.')
+            dataValidaOrErro(produto.manufacturingDate, 'Data de validade invalida.')
+            dataFabricacaoMaiorDataValidade(produto.manufacturingDate, produto.expirationDate, 
+                'Data de fabricação maior que data de validade.')    
+            EhNumberOrErro(produto.price, 'Informe um valor valido para o produto.')
+            EhNumberOrErro(produto.categoryId, 'Informe o id da categoria do produto.')
+
+            produto.price = produto.price.toFixed(2)
         } catch (error) {
             return res.status(400).send(error)
         }
