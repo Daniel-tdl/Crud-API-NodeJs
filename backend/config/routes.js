@@ -10,9 +10,9 @@ module.exports = app => {
         .all(app.config.passaporte.authenticate())
         .post(app.api.categoria.salvar)
 
-    app.route('/categorias/update')
+    app.route('/categorias/update/:id')
         .all(app.config.passaporte.authenticate())
-        .post(app.api.categoria.salvar)
+        .put(app.api.categoria.salvar)
 
     app.route('/categorias/show/:id')
         .all(app.config.passaporte.authenticate())
@@ -25,14 +25,14 @@ module.exports = app => {
     app.route('/categorias/delete/:id')
         .all(app.config.passaporte.authenticate())
         .post(app.api.categoria.remover)
-    
+
     app.route('/produtos/store')
         .all(app.config.passaporte.authenticate())
         .post(app.api.produto.salvar)
 
-    app.route('/produtos/update')
+    app.route('/produtos/update/:id')
         .all(app.config.passaporte.authenticate())
-        .post(app.api.produto.salvar)
+        .put(app.api.produto.salvar)
 
     app.route('/produtos/show/:id')
         .all(app.config.passaporte.authenticate())
@@ -46,4 +46,3 @@ module.exports = app => {
         .all(app.config.passaporte.authenticate())
         .post(app.api.produto.remover)
 }
-
