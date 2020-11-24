@@ -24,7 +24,7 @@ module.exports = app => {
 
     app.route('/categorias/delete/:id')
         .all(app.config.passaporte.authenticate())
-        .post(app.api.categoria.remover)
+        .delete(app.api.categoria.remover)
 
     app.route('/produtos/store')
         .all(app.config.passaporte.authenticate())
@@ -44,5 +44,5 @@ module.exports = app => {
 
     app.route('/produtos/delete/:id')
         .all(app.config.passaporte.authenticate())
-        .post(app.api.produto.remover)
+        .delete(app.api.produto.remover)
 }
